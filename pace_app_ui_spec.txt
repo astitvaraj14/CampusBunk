@@ -1,0 +1,148 @@
+====================================================================
+PACE — CLIENT & TASK TRACKER (MOBILE APP)
+UI DESIGN SPECIFICATION
+====================================================================
+Reference brief: 3-screen mobile CRM/task-tracker flow (onboarding →
+task list → stats dashboard), dark hero screen, light working screen,
+dark stats screen, floating cards, bottom tab bar.
+This spec defines an ORIGINAL interface of the same TYPE — new name,
+new palette, new type system, new layout details, new content.
+No text, iconography, imagery, or exact measurements are copied from
+the reference; only the screen category and general information
+architecture (onboarding → work list → analytics) is reused.
+====================================================================
+
+1. PRODUCT
+--------------------------------------------------------------------
+Name        : Pace
+Tagline     : "Run your client work like clockwork."
+Audience    : Solo consultants & small agency teams
+Job-to-be-done per screen:
+  Screen 1 (Onboarding) — first impression, explain the app in one line
+  Screen 2 (Tasks)      — triage today's work, see status at a glance
+  Screen 3 (Overview)   — weekly performance & time-tracking snapshot
+
+2. COLOR PALETTE (named tokens, hex)
+--------------------------------------------------------------------
+--ink        #14171C   App dark background (blue-black, not pure #000)
+--panel      #1E2229   Dark surface / elevated card on Ink
+--paper      #F7F4EE   Light background (warm off-white, not pure #FFF)
+--paper-card #FFFFFF   Card surface on Paper background
+--amber      #E8A33D   Primary accent — progress, primary buttons, active states
+--moss       #6E8F72   Positive / "in progress" status tag
+--clay       #C1524A   Alert / "overdue" / destructive status tag
+--ink-soft   #7A7E88   Secondary text on light surfaces
+--paper-soft #A9ADB4   Secondary text on dark surfaces
+--line       #E7E3DA   Hairline divider on light surfaces
+--line-dark  #2B2F37   Hairline divider on dark surfaces
+
+Usage rule: Amber is reserved for exactly one primary action or the
+single most important stat per screen — never used for both a button
+and a chart bar on the same screen, to keep one clear focal point.
+
+3. TYPOGRAPHY
+--------------------------------------------------------------------
+Display face : Fraunces (variable, optical size 72, weight 500–600)
+                Used only for: hero headline on onboarding, the one
+                "big number" stat per screen (e.g. completion %,
+                hours tracked). Never used for body copy or labels.
+
+UI/body face  : Inter (400 regular, 500 medium, 600 semibold)
+                Used for: nav labels, card titles, body text, buttons.
+
+Utility face  : IBM Plex Mono (400, 500)
+                Used for: timestamps, dates, percentages inside data
+                visualizations, tab-bar micro-labels — anything that
+                reads as "system data" rather than prose.
+
+Type scale:
+  Hero display     40px / 44px line-height / Fraunces 600
+  Section number   32px / 36px            / Fraunces 500
+  Card title        16px / 22px            / Inter 600
+  Body               14px / 20px            / Inter 400
+  Caption/meta        12px / 16px            / Inter 500, letter-spacing 0.02em
+  Mono data           12px / 16px            / IBM Plex Mono 500
+
+4. SHAPE & LAYOUT
+--------------------------------------------------------------------
+Phone frame radius     : 46px, 8px bezel, notch pill 90x24px centered
+Card radius (standard) : 20px
+Card radius (small tag): 999px (full pill) — status chips, buttons
+Icon button radius     : 999px, 40x40px hit target
+Grid                    : 16px base unit; screen padding 20px;
+                          card internal padding 16–18px; gap 12px
+Elevation stack         : onboarding screen shows two overlapping
+                          cards rotated -6° / +3° behind the hero
+                          card — this is Pace's signature layout
+                          device (see section 7)
+
+5. SHADOWS (elevation tokens)
+--------------------------------------------------------------------
+--shadow-light-sm : 0 2px 8px rgba(20,23,28,0.06)
+--shadow-light-md : 0 8px 20px rgba(20,23,28,0.10)
+--shadow-dark-md  : 0 12px 32px -8px rgba(0,0,0,0.45)
+--shadow-dark-lg  : 0 24px 48px -16px rgba(0,0,0,0.55)
+--shadow-amber-glow (buttons only) : 0 8px 20px rgba(232,163,61,0.35)
+
+6. ICONOGRAPHY
+--------------------------------------------------------------------
+Set        : Lucide (outline style)
+Stroke     : 1.5px
+Size       : 18px inline / 20px nav bar / 24px feature icons
+Fill rule  : No fill on default state; active nav icon gets a solid
+             --amber dot indicator above it, not a filled icon swap
+Icons used : Home, Briefcase, BarChart3, User, ChevronRight, Filter,
+             Calendar, Clock, ArrowUpRight, Check, AlertCircle
+
+7. SIGNATURE ELEMENT
+--------------------------------------------------------------------
+"The Ledger Stack" — on the onboarding screen, two small data cards
+(a mini weekly-hours bar strip and a client-count tally) sit fanned
+out behind the main welcome card at a slight rotation, like index
+cards pulled from a drawer. This motif of "physical, stackable
+records" carries through the rest of the app as the card metaphor
+for individual tasks and deals — reinforcing that Pace treats each
+task as a tangible, movable card rather than an abstract row.
+
+8. COMPONENTS / FORMS
+--------------------------------------------------------------------
+- Segmented control (To do / Doing / Review): pill container --panel
+  or --line background, active segment --ink or --paper-card with
+  shadow-light-sm, 8px vertical padding, Inter 600 12px labels.
+
+- Task card: --paper-card surface, 20px radius, shadow-light-sm,
+  16px padding. Top row: title (Inter 600 15px) + priority chip
+  (pill, colored by --moss/--amber/--clay per priority). Middle:
+  2-line body copy in --ink-soft. Bottom row: deadline (mono, 12px)
+  left, stacked circular avatars right (28px, 3px paper-card border,
+  -8px overlap).
+
+- Progress bar: 4px height, full radius track in --line, fill in
+  --amber, with mono percentage label right-aligned above.
+
+- Stat pill (overview screen): --panel surface, 16px radius, 14px
+  padding, top-right micro badge for delta ("+1 today") in --clay
+  or --moss pill, big Fraunces number, Inter 500 12px label below.
+
+- Bottom tab bar: floating pill, --ink or --panel surface, 999px
+  radius, shadow-dark-md, 4 icon buttons, active icon in --paper
+  with a 4px --amber dot centered above it.
+
+- Primary button ("Continue" / "View all"): --amber fill, --ink text
+  (Inter 600 14px), full pill radius, shadow-amber-glow, 14px
+  vertical padding.
+
+- Dot pagination (onboarding): 3 dots, inactive 6px --line-dark,
+  active 20px pill --amber.
+
+9. MOTION (if implemented beyond static build)
+--------------------------------------------------------------------
+- Segmented control: sliding indicator, 200ms ease-out
+- Task card enter: 16px translate-y + fade, 240ms, staggered 40ms
+- Progress bar fill: width animates 600ms ease-out on mount
+- Tab switch: 150ms crossfade, no bounce (keeps it feeling utilitarian,
+  not playful — matches the "ledger" positioning)
+
+====================================================================
+END OF SPEC
+====================================================================
